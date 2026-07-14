@@ -20,9 +20,3 @@ venv/
 .idea/
 
 .fuse_hidden*
-
-# AI assistant config / reference — kept local, not uploaded
-CLAUDE.md
-.claude/
-AGENTS.md
-.Codex/

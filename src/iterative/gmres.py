@@ -108,17 +108,16 @@ def gmres(A, b, x0=None, max_iter=1000, tol=1e-6, restart=100):
 np.random.seed(0)
 
 n = 500
-
-A = np.random.randn(n, n)
-A = A + n * np.eye(n)
-
-x_exact = np.ones(n)
-b = A @ x_exact
+# test case a large A
+import finite_diff.fd_1d_bvp as fd
+x_grid,A,F = fd.fd_matrix_sys_1d(n, c=1.0, b=0.0, f = lambda x: np.sinc(x), x_left=-2.0, x_right=2.0, u_a=1.0, u_b=1.0)
+b = F
 
 x0 = np.zeros(n)
 
-x, iters = gmres(A, b, x0, max_iter=500, tol=1e-8, restart=20)
+x, iters = gmres(A, b, x0, max_iter=n, tol=1e-10, restart=n)
+x_exact = np.linalg.solve(A, b)
+print("GMRES iterations:", iters)
+print("GMRES error:", np.linalg.norm(x - x_exact))
 
-print("Number of iterations:", iters)
-print("Relative error:", np.linalg.norm(x - x_exact) / np.linalg.norm(x_exact))
-print("Relative residual:", np.linalg.norm(b - A @ x) / np.linalg.norm(b))
+print("absolute residual:", np.linalg.norm(b - A @ x))

@@ -9,9 +9,9 @@ All finite-diff modules follow the **matrix-builder pattern**: functions return 
 ---
 
 ### `src/finite_diff/fd_1d_bvp.py`
-- **Exports:** `fd_matrix_1d(m, c, b, x_left, x_right) -> (x, A)`
-- **Method:** Centered FD operator for `u'' + b·u' − c·u = f` on `[x_left, x_right]`
-- **Key math:** `A = D_2 + b·D_1 − c·I` (m×m); `D_2 = tridiag(1,−2,1)/h²`; `D_1 = tridiag(−1,0,1)/(2h)`; advection term `b·D_1` included for generality
+- **Exports:** `fd_matrix_sys_1d(m, c=0.0, b=0.0, f=..., x_left=-1.0, x_right=1.0, u_a=0.0, u_b=0.0) -> (x, A, F)`
+- **Method:** Centered FD operator for `u'' + b·u' − c·u = f` on `[x_left, x_right]`; now assembles the full system (matrix + Dirichlet-adjusted RHS) instead of just the matrix
+- **Key math:** `A = D_2 + b·D_1 − c·I` (m×m); `D_2 = tridiag(1,−2,1)/h²`; `D_1 = tridiag(−1,0,1)/(2h)`; advection term `b·D_1` included for generality; `F` folds in `u_a`, `u_b` at the boundary rows
 - **Reference:** hw3/hw3-prob2a.py
 
 ### `src/finite_diff/richardson_extrap.py`
@@ -20,7 +20,7 @@ All finite-diff modules follow the **matrix-builder pattern**: functions return 
 - **Key math:** `S_rich = (2^p · S(h/2) − S(h)) / (2^p − 1)` cancels leading error; if `p=None`, estimated from ratio `log|S(h)−S(h/2)| / |S(h/2)−S(h/4)|| / log 2`
 - **Reference:** hw3/hw3-prob3b.py
 
-### `src/finite_diff/newton_nonlinear_bvp.py`
+### `src/iterative/newton.py` (moved out of `finite_diff/` — general-purpose, not BVP-specific)
 - **Exports:** `newton_solve(F_func, J_func, theta0, max_iter, tol, damping) -> (theta, iters)`
 - **Method:** General damped Newton solver; `F` and `J` injected as callables
 - **Key math:** `J·delta = F`; `theta ← theta − damping·delta`; stop when `‖delta‖ < tol`; `damping=0.5` matches the pendulum BVP reference
@@ -84,4 +84,4 @@ All finite-diff modules follow the **matrix-builder pattern**: functions return 
 | `src/chebyshev/` | `cheb_diff_matrix.py`, `cheb_bvp.py`, `legendre_coeff_diff.py`, `legendre_pseudospectral_bvp.py` |
 | `src/integral_eq/` | `nystrom_bie.py`, `fredholm_trapezoidal.py`, `fredholm_second_kind.py` |
 | `src/pde/` | `heat_adi.py`, `heat_nonlinear_be.py`, `schrodinger_explicit.py`, `schrodinger_cn_newton.py`, `advection_char.py` |
-| `src/iterative/` | (no files defined in CLAUDE.md yet) |
+| `src/iterative/` | (no files defined yet) |

@@ -3,9 +3,9 @@ requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "numerical-methods-self-implementation"
+name = "numerical-methods-lab"
 version = "0.0.1"
-description = "Personal self-implementation notes and code for numerical methods."
+description = "NumericalMethodsLab — a working lab notebook of numerical algorithms implemented from scratch, for mathematical transparency."
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.24",

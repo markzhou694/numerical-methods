@@ -2,7 +2,7 @@
 
 Source: NM1 slides `slides_1124.pdf`, `slides_1119.pdf`, `slides_1201.pdf`.
 
-Each function below follows the project conventions in `CLAUDE.md`:
+Each function below follows the project conventions:
 - plain functions, no classes
 - variable names match the math
 - explicit loops unless vectorization is structurally transparent

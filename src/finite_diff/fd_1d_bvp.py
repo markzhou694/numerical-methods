@@ -24,7 +24,7 @@ import numpy as np
 #   U_int = np.linalg.solve(A, F) #or other linear solver
 
 
-def fd_matrix_1d(m, c=0.0, b=0.0, x_left=-1.0, x_right=1.0):
+def fd_matrix_sys_1d(m, c=0.0, b=0.0, f=lambda x: np.zeros_like(x), x_left=-1.0, x_right=1.0, u_a=0.0, u_b=0.0):
     """
     Build the interior finite-difference operator for  u'' + b*u' - c*u = f.
 
@@ -33,6 +33,7 @@ def fd_matrix_1d(m, c=0.0, b=0.0, x_left=-1.0, x_right=1.0):
     m       : number of interior grid points
     c       : coefficient on u   (scalar)
     b       : coefficient on u'  (scalar);  b=0 gives no advection
+    f       : right-hand side function
     x_left  : left endpoint
     x_right : right endpoint
 
@@ -42,6 +43,7 @@ def fd_matrix_1d(m, c=0.0, b=0.0, x_left=-1.0, x_right=1.0):
     A : (m, m) ndarray — operator  D_2 + b*D_1 - c*I
         D_2[j,j]   = -2/h^2,  D_2[j,j±1] =  1/h^2
         D_1[j,j+1] =  1/(2h), D_1[j,j-1] = -1/(2h)
+    F : (m,) array — right-hand side for Dirichlet BCs
     """
     h = (x_right - x_left) / (m + 1)
     x = x_left + np.arange(m + 2) * h
@@ -57,4 +59,12 @@ def fd_matrix_1d(m, c=0.0, b=0.0, x_left=-1.0, x_right=1.0):
 
     A = D_2 + b * D_1 - c * np.eye(m)
 
-    return x, A
+    F = f(x[1:-1]).copy()  # interior points only       
+    # Adjust F for Dirichlet BCs: u(x_left) = u_a, u(x_right) = u_b
+
+    F[0]  -= u_a / h**2  # u(x_left) = u_a
+    F[-1] -= u_b / h**2  # u(x_right) = u_b
+    F[0]  += b * u_a / (2*h) 
+    F[0]  -= b * u_b / (2*h) 
+
+    return x, A, F

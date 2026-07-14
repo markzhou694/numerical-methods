@@ -38,7 +38,7 @@ wheels = [
 ]
 
 [[package]]
-name = "numerical-methods-self-implementation"
+name = "numerical-methods-lab"
 version = "0.0.1"
 source = { editable = "." }
 dependencies = [

@@ -55,7 +55,7 @@ def newton_cotes_weights(n):
         e_i    = np.zeros(n + 1)
         e_i[i] = 1.0
         L_i    = lagrange_eval(t_fine, t_nodes, e_i)   # L_i on fine grid
-        w[i]   = np.trapz(L_i, t_fine)                 # w_i = integral_0^1 L_i dt
+        w[i]   = np.trapezoid(L_i, t_fine)                 # w_i = integral_0^1 L_i dt
 
     return t_nodes, w
 
