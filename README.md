@@ -1,4 +1,4 @@
-# NumericalMethodsLab
+# NumericalMethods
 
 A collection of numerical algorithms implemented from scratch in Python.
 The goal is mathematical transparency — variable names match the math, loops reveal the structure,
