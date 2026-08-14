@@ -23,7 +23,7 @@ from interpolation.lagrange import lagrange_eval
 #   I    = newton_cotes_integrate(f, a, b, 2)
 
 
-def newton_cotes_weights(N):
+def newton_cotes_weights(N: int):
     """
     Compute Newton-Cotes weights for N intervals and N+1 nodes on [0, 1].
 
@@ -60,7 +60,7 @@ def newton_cotes_weights(N):
     return t_nodes, w
 
 
-def newton_cotes_integrate(f, a, b, N):
+def newton_cotes_integrate(f, a: float, b: float, N: int):
     """
     Integrate f on [a, b] with N intervals and N+1 Newton-Cotes nodes.
 

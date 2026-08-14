@@ -25,7 +25,7 @@ import numpy as np
 #   xi = chebyshev_nodes(10)     # 11 Chebyshev points in [-1, 1]
 
 
-def equispaced_nodes(N):
+def equispaced_nodes(N: int):
     """
     N+1 equally spaced nodes on [-1, 1].
 
@@ -45,7 +45,7 @@ def equispaced_nodes(N):
     return xi
 
 
-def chebyshev_nodes(N):
+def chebyshev_nodes(N: int):
     """
     N+1 Chebyshev extremal nodes on [-1, 1].
 

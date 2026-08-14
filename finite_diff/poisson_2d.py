@@ -10,10 +10,10 @@ from scipy import sparse
 
 
 def poisson_2d_matrix(
-    N,
-    x_range=(-0.5, 0.5),
-    y_range=(-0.5, 0.5),
-    stencil=5,
+    N: int,
+    x_range: tuple = (-0.5, 0.5),
+    y_range: tuple = (-0.5, 0.5),
+    stencil: int = 5,
 ):
     """
     Build a 5-point or 9-point Laplacian on the interior grid.

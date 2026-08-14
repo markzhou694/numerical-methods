@@ -47,7 +47,7 @@ import numpy as np
 #    parametrization, not a coding fault.
 
 
-def trimres(A, b, x0=None, tol=1e-6, max_iter=None, check_every=10):
+def trimres(A: np.ndarray, b: np.ndarray, x0: np.ndarray = None, tol: float = 1e-6, max_iter: int = None, check_every: int = 10):
     """
     Solve A x = b by TriMRES (a GMRES variant with a triangular projected
     system).

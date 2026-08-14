@@ -26,7 +26,7 @@ import numpy as np
 #   I = tensor_product_2d(f, 0, 1, 0, 1, gauss_legendre_nodes_weights, 10)
 
 
-def tensor_product_2d(f, a1, b1, a2, b2, quad_fn, rule_parameter):
+def tensor_product_2d(f: callable, a1: float, b1: float, a2: float, b2: float, quad_fn: callable, rule_parameter: int):
     """
     2D tensor-product quadrature on [a1,b1] x [a2,b2].
 

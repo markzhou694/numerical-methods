@@ -33,7 +33,7 @@ import numpy as np
 #     ||r_k|| / ||r_0|| < tol
 
 
-def gauss_seidel_solve(A, b, x0=None, max_iter=20000, tol=1e-8):
+def gauss_seidel_solve(A: np.ndarray, b: np.ndarray, x0: np.ndarray = None, max_iter: int = 20000, tol: float = 1e-8):
     """
     Solve A x = b by the Gauss-Seidel iteration.
 

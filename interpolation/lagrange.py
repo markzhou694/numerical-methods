@@ -29,7 +29,7 @@ from interpolation.nodes import equispaced_nodes, chebyshev_nodes
 #   x_nodes, f_nodes, x_eval, p_eval = lagrange_interpolate(f, a, b, N)
 
 
-def lagrange_eval(xi_eval, xi_nodes, f_nodes):
+def lagrange_eval(xi_eval: np.ndarray, xi_nodes: np.ndarray, f_nodes: np.ndarray) -> np.ndarray:
     """
     Evaluate the Lagrange interpolant at xi_eval.
 
@@ -62,7 +62,7 @@ def lagrange_eval(xi_eval, xi_nodes, f_nodes):
     return p
 
 
-def lagrange_interpolate(f, a, b, N, node_type="chebyshev", xi_nodes=None, x_eval=None):
+def lagrange_interpolate(f, a: float, b: float, N: int, node_type: str = "chebyshev", xi_nodes: np.ndarray = None, x_eval: np.ndarray = None):
     """
     Interpolate f on the physical interval [a, b] with N+1 nodes.
 

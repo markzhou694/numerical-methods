@@ -19,7 +19,7 @@ import numpy as np
 #   I, n_evals = adaptive_trapezoidal(f, a, b, tol=1e-6)
 
 
-def adaptive_trapezoidal(f, a, b, tol, n_max=1e6):
+def adaptive_trapezoidal(f, a: float, b: float, tol: float, n_max: float = 1e6):
     """
     Adaptive composite trapezoidal rule on [a, b].
 

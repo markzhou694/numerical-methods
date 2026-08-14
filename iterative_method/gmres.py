@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def gmres(A, b, x0=None, max_iter=1000, tol=1e-6, restart=100):
+def gmres(A: np.ndarray, b: np.ndarray, x0: np.ndarray = None, max_iter: int = 1000, tol: float = 1e-6, restart: int = 100):
     """
     Solve A x = b using restarted GMRES.
 

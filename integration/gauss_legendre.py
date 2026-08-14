@@ -27,7 +27,7 @@ from interpolation.interval_map import from_standard
 #   x, w = gauss_legendre_nodes_weights(a, b, n_nodes)
 
 
-def gauss_legendre(f, a, b, n_nodes):
+def gauss_legendre(f, a: float, b: float, n_nodes: int):
     """
     n_nodes-point Gauss-Legendre quadrature on [a, b].
 

@@ -19,7 +19,7 @@ import numpy as np
 #   x, w = trapezoidal_nodes_weights(a, b, N)
 
 
-def trapezoidal(f, a, b, N):
+def trapezoidal(f: callable, a: float, b: float, N: int):
     """
     Composite trapezoidal rule on [a, b] with N intervals.
 

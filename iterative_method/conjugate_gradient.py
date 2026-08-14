@@ -3,7 +3,7 @@ from scipy import sparse
 
 
 
-def conjugate_gradient(A, b, x0=None, max_iter=20000, tol=1e-8):
+def conjugate_gradient(A: np.ndarray, b: np.ndarray, x0: np.ndarray = None, max_iter: int = 20000, tol: float = 1e-8):
     """
     Solve A x = b by the conjugate gradient iteration.
 

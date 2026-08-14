@@ -15,7 +15,7 @@ import numpy as np
 #   S = simpson(f, a, b, N)   # N must be even
 
 
-def simpson(f, a, b, N):
+def simpson(f, a: float, b: float, N: int):
     """
     Composite Simpson's rule on [a, b] with N intervals.
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-def power_method(A, num_iters: int = 1000, tol: float = 1e-10):
+def power_method(A: np.ndarray, num_iters: int = 1000, tol: float = 1e-10):
     """
     Computes the dominant eigenvalue and corresponding eigenvector of a matrix A using the power method.
 

@@ -45,8 +45,10 @@ import numpy as np
 #     U = np.linalg.solve(A, F)
 
 
-def _values_on_grid(coefficient, x):
+def _values_on_grid(coefficient, x: np.ndarray):
+
     """Evaluate a scalar or callable coefficient on the grid x."""
+
     if callable(coefficient):
         values = np.asarray(coefficient(x), dtype=float)
     else:
@@ -62,15 +64,15 @@ def _values_on_grid(coefficient, x):
 
 
 def fd_bvp_1d(
-    N,
-    a=1.0,
-    b=0.0,
-    c=0.0,
-    f=0.0,
-    x_left=0.0,
-    x_right=1.0,
-    bc_left=(1.0, 0.0, 0.0),
-    bc_right=(1.0, 0.0, 0.0),
+    N: int,
+    a: float = 1.0,
+    b: float = 0.0,
+    c: float = 0.0,
+    f: float = 0.0,
+    x_left: float = 0.0,
+    x_right: float = 1.0,
+    bc_left: tuple = (1.0, 0.0, 0.0),
+    bc_right: tuple = (1.0, 0.0, 0.0),
 ):
     """
     Build the full finite-difference system for a linear 1D BVP.

@@ -59,8 +59,8 @@ import numpy as np
 # If 0 < damping < 1, this is damped Newton.
 
 
-def newton_solve(F_func, J_func, theta0,
-                 max_iter=2000, tol=1e-8, damping=0.5,
+def newton_solve(F_func: callable, J_func: callable, theta0: np.ndarray,
+                 max_iter: int = 2000, tol: float = 1e-8, damping: float = 0.5,
                  linear_solver=np.linalg.solve):
     """
     Solve F(theta) = 0 by damped Newton iteration.

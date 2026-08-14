@@ -30,7 +30,7 @@ import numpy as np
 #   p ≈ log( |S(h) - S(h/2)| / |S(h/2) - S(h/4)| ) / log(2)
 
 
-def estimate_p(approximation, f, x, h):
+def estimate_p(approximation: callable, f: callable, x: float, h: float):
     """
     Estimate order p using three step sizes:
         S(h), S(h/2), S(h/4)
@@ -52,7 +52,7 @@ def estimate_p(approximation, f, x, h):
     return p_est
 
 
-def richardson(approximation, f, x, h, p=None):
+def richardson(approximation: callable, f: callable, x: float, h: float, p=None):
     """
     Richardson extrapolation for a p-th order approximation.
 
