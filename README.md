@@ -57,12 +57,22 @@ x_nodes, f_nodes, x_eval, p_eval = lagrange_interpolate(
 ```
 
 ```python
-from finite_diff.fd_1d_bvp import fd_matrix_sys_1d
 import numpy as np
+from finite_diff import fd_bvp_1d
 
 f = lambda x: np.sin(np.pi * x)
-x, A, F = fd_matrix_sys_1d(m=50, c=1.0, b=0.0, f=f, x_left=0.0, x_right=1.0, u_a=0.0, u_b=0.0)
-U_int = np.linalg.solve(A, F)
+x, A, F = fd_bvp_1d(
+    N=50,
+    a=1.0,
+    b=0.0,
+    c=0.0,
+    f=f,
+    x_left=0.0,
+    x_right=1.0,
+    bc_left=(1.0, 0.0, 0.0),
+    bc_right=(1.0, 0.0, 0.0),
+)
+U = np.linalg.solve(A, F)
 ```
 
 ---

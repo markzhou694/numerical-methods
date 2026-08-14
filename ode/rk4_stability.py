@@ -13,12 +13,12 @@ import numpy as np
 # The method is stable when  |p(z)| <= 1.
 #
 # Usage:
-#   Re, Im, mask = rk4_stability_region(re_range=(-5, 2), im_range=(-4, 4), n_pts=500)
+#   Re, Im, mask = rk4_stability_region(re_range=(-5, 2), im_range=(-4, 4), N=500)
 #   plt.contourf(Re, Im, mask, levels=[0.5, 1.5], colors=['grey'])
 #   plt.contour( Re, Im, mask, levels=[0.5],      colors=['black'])
 
 
-def rk4_stability_region(re_range=(-5, 2), im_range=(-4, 4), n_pts=500):
+def rk4_stability_region(re_range=(-5, 2), im_range=(-4, 4), N=500):
     """
     Evaluate the RK4 stability polynomial on a grid of complex numbers.
 
@@ -26,16 +26,19 @@ def rk4_stability_region(re_range=(-5, 2), im_range=(-4, 4), n_pts=500):
     ----------
     re_range : (re_min, re_max) — real axis bounds
     im_range : (im_min, im_max) — imaginary axis bounds
-    n_pts    : number of grid points in each direction
+    N        : number of intervals in each direction; N+1 grid points
 
     Returns
     -------
-    Re   : (n_pts, n_pts) array — real part of z
-    Im   : (n_pts, n_pts) array — imaginary part of z
-    mask : (n_pts, n_pts) bool array — True where |p(z)| <= 1
+    Re   : (N+1, N+1) array — real part of z
+    Im   : (N+1, N+1) array — imaginary part of z
+    mask : (N+1, N+1) bool array — True where |p(z)| <= 1
     """
-    re = np.linspace(re_range[0], re_range[1], n_pts)
-    im = np.linspace(im_range[0], im_range[1], n_pts)
+    if not isinstance(N, (int, np.integer)) or N < 1:
+        raise ValueError("N must be an integer with N >= 1")
+
+    re = np.linspace(re_range[0], re_range[1], N + 1)
+    im = np.linspace(im_range[0], im_range[1], N + 1)
 
     Re, Im = np.meshgrid(re, im)
     z = Re + 1j * Im

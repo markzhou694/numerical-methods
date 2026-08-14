@@ -25,7 +25,7 @@ import numpy as np
 #     ||r_k|| / ||r_0|| < tol.
 
 
-def projection_2d_solve(A, b, x0=None, max_iter=1000, tol=1e-8):
+def projection_2d_solve(A: np.ndarray, b: np.ndarray, x0: np.ndarray = None, max_iter: int = 1000, tol: float = 1e-8):
     """
     Solve A x = b (A symmetric positive definite) by the two-dimensional
     projection method on K = L = span{r_k, A r_k}.
@@ -107,3 +107,10 @@ def projection_2d_solve(A, b, x0=None, max_iter=1000, tol=1e-8):
         x = x + alpha1 * r + alpha2 * p
 
     return x, max_iter
+
+
+if __name__ == "__main__":  
+   A = np.array([[4, 1], [1, 3]])
+   b = np.array([1, 2])
+   x, iters = projection_2d_solve(A, b) 
+   print("Solution:", x)

@@ -19,7 +19,7 @@ import numpy as np
 #   I, n_evals = adaptive_trapezoidal(f, a, b, tol=1e-6)
 
 
-def adaptive_trapezoidal(f, a, b, tol):
+def adaptive_trapezoidal(f, a, b, tol, n_max=1e6):
     """
     Adaptive composite trapezoidal rule on [a, b].
 
@@ -53,6 +53,10 @@ def adaptive_trapezoidal(f, a, b, tol):
     I = 0.0
 
     while stack:
+        if n_evals[0] >= n_max:
+           raise RuntimeError(
+            f"Maximum number of function evaluations reached: {n_max}"
+        )
         c, d, fc, fd, T_cd = stack.pop()
 
         m  = 0.5 * (c + d)
@@ -62,7 +66,7 @@ def adaptive_trapezoidal(f, a, b, tol):
         T_right = trap_panel(m, d, fm, fd)
 
         # err_est = |T_coarse - (T_left + T_right)|
-        err_est   = abs(T_cd - (T_left + T_right))
+        err_est   = abs(T_cd - (T_left + T_right))/3
         local_tol = tol * (d - c) / (b - a)
 
         if err_est < local_tol:
@@ -73,3 +77,20 @@ def adaptive_trapezoidal(f, a, b, tol):
             stack.append((m, d, fm, fd, T_right))
 
     return I, n_evals[0]
+
+
+# test function: f(x) = tanh(20x) on [0, 1]
+if __name__ == "__main__":
+    f = lambda x: np.tanh(20 * x)
+    a = 0.0
+    b = 1.0
+    tol = 1e-7
+
+    I, n_evals = adaptive_trapezoidal(f, a, b, tol)
+    print(f"Integral estimate: {I:.10f}, f-evals: {n_evals}")
+    # normal trapezoidal rule with 2000 panels
+    N = 3000
+    h = (b - a) / N
+    x = np.linspace(a, b, N + 1)
+    T = np.trapezoid(f(x), x)
+    print(f"Normal trapezoidal rule with {N} panels: {T:.10f}")

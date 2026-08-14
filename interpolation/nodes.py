@@ -8,7 +8,7 @@ import numpy as np
 #       xi_k = -1 + 2k/N ,            k = 0, 1, ..., N
 #
 #   Chebyshev (extremal):
-#       xi_k = cos(pi * k / N) ,      k = 0, 1, ..., N
+#       xi_k = -cos(pi * k / N) ,     k = 0, 1, ..., N
 #
 # Equispaced nodes are simple but suffer from the Runge phenomenon: the
 # Lebesgue constant grows exponentially with N, making high-degree
@@ -37,6 +37,9 @@ def equispaced_nodes(N):
     -------
     xi : (N+1,) array — nodes xi_k = -1 + 2k/N,  k = 0, ..., N
     """
+    if not isinstance(N, (int, np.integer)) or N < 1:
+        raise ValueError("N must be an integer with N >= 1")
+
     k  = np.arange(N + 1)
     xi = -1.0 + 2.0 * k / N
     return xi
@@ -52,10 +55,13 @@ def chebyshev_nodes(N):
 
     Returns
     -------
-    xi : (N+1,) array — nodes xi_k = cos(pi k / N),  k = 0, ..., N
-         ordered from xi_0 = 1 (right) to xi_N = -1 (left)
+    xi : (N+1,) array — nodes xi_k = -cos(pi k / N), k = 0, ..., N
+         ordered from xi_0 = -1 (left) to xi_N = 1 (right)
     """
-    # same convention as the Chebyshev grid in hw2
+    if not isinstance(N, (int, np.integer)) or N < 1:
+        raise ValueError("N must be an integer with N >= 1")
+
+    # Increasing order: xi_0=-1 and xi_N=1.
     k  = np.arange(N + 1)
-    xi = np.cos(np.pi * k / N)
+    xi = -np.cos(np.pi * k / N)
     return xi

@@ -104,20 +104,26 @@ def gmres(A, b, x0=None, max_iter=1000, tol=1e-6, restart=100):
     return x, total_iters
 
 
-# test on a larger matrix
-np.random.seed(0)
+if __name__ == "__main__":
+    from finite_diff.fd_1d_bvp import fd_bvp_1d
 
-n = 500
-# test case a large A
-import finite_diff.fd_1d_bvp as fd
-x_grid,A,F = fd.fd_matrix_sys_1d(n, c=1.0, b=0.0, f = lambda x: np.sinc(x), x_left=-2.0, x_right=2.0, u_a=1.0, u_b=1.0)
-b = F
+    N = 500
+    x_grid, A, F = fd_bvp_1d(
+        N,
+        a=1.0,
+        b=0.0,
+        c=-1.0,
+        f=np.sinc,
+        x_left=-2.0,
+        x_right=2.0,
+        bc_left=(1.0, 0.0, 1.0),
+        bc_right=(1.0, 0.0, 1.0),
+    )
 
-x0 = np.zeros(n)
+    x0 = np.zeros(N + 1)
+    x, iters = gmres(A, F, x0, max_iter=N + 1, tol=1e-10, restart=N + 1)
+    x_exact = np.linalg.solve(A, F)
 
-x, iters = gmres(A, b, x0, max_iter=n, tol=1e-10, restart=n)
-x_exact = np.linalg.solve(A, b)
-print("GMRES iterations:", iters)
-print("GMRES error:", np.linalg.norm(x - x_exact))
-
-print("absolute residual:", np.linalg.norm(b - A @ x))
+    print("GMRES iterations:", iters)
+    print("GMRES error:", np.linalg.norm(x - x_exact))
+    print("absolute residual:", np.linalg.norm(F - A @ x))

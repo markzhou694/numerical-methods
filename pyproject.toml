@@ -18,4 +18,13 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
+include = [
+    "finite_diff*",
+    "integration*",
+    "interpolation*",
+    "iterative*",
+    "ode*",
+    "pde*",
+    "utils*",
+]

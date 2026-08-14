@@ -1,8 +1,8 @@
 import numpy as np
 
-from iterative.newton import newton_solve 
-from iterative.gmres import gmres
-from iterative.trimres import trimres
+from iterative_method.newton import newton_solve 
+from iterative_method.gmres import gmres
+from iterative_method.trimres import trimres
 
 # Backward Euler for
 #
@@ -109,7 +109,7 @@ def backward_euler_step_linear(J, g, t, U, k, linear_solver=np.linalg.solve):
     return U_new
 
 
-def backward_euler_solve_linear(J, g, t0, U0, t_final, k,
+def backward_euler_solve_linear(J, g, t0, U0, t_final, N,
                                 linear_solver=np.linalg.solve):
     """
     Solve
@@ -130,8 +130,8 @@ def backward_euler_solve_linear(J, g, t0, U0, t_final, k,
         Initial condition.
     t_final : float
         Final time.
-    k : float
-        Time step.
+    N : int
+        Number of equal time intervals; the grid is t_0, ..., t_N.
     linear_solver : callable, optional
         Linear solver for each implicit step. Contract: linear_solver(A, b) -> x.
         Default np.linalg.solve.
@@ -143,24 +143,21 @@ def backward_euler_solve_linear(J, g, t0, U0, t_final, k,
     U_values : ndarray
         Solution values.
     """
-    t = t0
+    if not isinstance(N, (int, np.integer)) or N < 1:
+        raise ValueError("N must be an integer with N >= 1")
+
+    t_values = np.linspace(t0, t_final, N + 1)
+    k = (t_final - t0) / N
     U = U0.copy()
+    U_values = np.zeros((N + 1, len(U0)))
+    U_values[0] = U
 
-    t_values = [t]
-    U_values = [U.copy()]
-
-    while t < t_final:
-        if t + k > t_final:
-            k = t_final - t
-
-        U = backward_euler_step_linear(J, g, t, U, k,
+    for i in range(N):
+        U = backward_euler_step_linear(J, g, t_values[i], U, k,
                                        linear_solver=linear_solver)
-        t += k
+        U_values[i + 1] = U
 
-        t_values.append(t)
-        U_values.append(U.copy())
-
-    return np.array(t_values), np.array(U_values)
+    return t_values, U_values
 
 
 def backward_euler_step_newton(f, Jf, t, U, k, tol=1e-10, max_iter=50,
@@ -217,7 +214,7 @@ def backward_euler_step_newton(f, Jf, t, U, k, tol=1e-10, max_iter=50,
     return V
 
 
-def backward_euler_solve_newton(f, Jf, t0, U0, t_final, k,
+def backward_euler_solve_newton(f, Jf, t0, U0, t_final, N,
                                 tol=1e-10, max_iter=50,
                                 linear_solver=np.linalg.solve):
     """
@@ -246,8 +243,8 @@ def backward_euler_solve_newton(f, Jf, t0, U0, t_final, k,
     t_final : float
         Final time.
 
-    k : float
-        Time step.
+    N : int
+        Number of equal time intervals; the grid is t_0, ..., t_N.
 
     tol : float
         Newton tolerance.
@@ -267,29 +264,25 @@ def backward_euler_solve_newton(f, Jf, t0, U0, t_final, k,
     U_values : ndarray
         Solution values.
     """
-    t = t0
+    if not isinstance(N, (int, np.integer)) or N < 1:
+        raise ValueError("N must be an integer with N >= 1")
+
+    t_values = np.linspace(t0, t_final, N + 1)
+    k = (t_final - t0) / N
     U = U0.copy()
+    U_values = np.zeros((N + 1, len(U0)))
+    U_values[0] = U
 
-    t_values = [t]
-    U_values = [U.copy()]
-
-    while t < t_final:
-        if t + k > t_final:
-            k = t_final - t
-
+    for i in range(N):
         U = backward_euler_step_newton(
-            f, Jf, t, U, k,
+            f, Jf, t_values[i], U, k,
             tol=tol,
             max_iter=max_iter,
             linear_solver=linear_solver
         )
+        U_values[i + 1] = U
 
-        t += k
-
-        t_values.append(t)
-        U_values.append(U.copy())
-
-    return np.array(t_values), np.array(U_values)
+    return t_values, U_values
 
 
 
@@ -322,12 +315,12 @@ if __name__ == "__main__":
 
     t0 = 0.0
     t_final = 10.0
-    k = 0.01
+    N = 1000
 
     U0 = np.array([0.5, -0.2])
 
     t_values, U_values = backward_euler_solve_newton(
-        f, Jf, t0, U0, t_final, k,
+        f, Jf, t0, U0, t_final, N,
         tol=1e-10,
         max_iter=50,
         # gmres returns (x, iters); wrap it so it returns only x  (contract: solver(A,b)->x)
@@ -354,7 +347,7 @@ if __name__ == "__main__":
     U0_linear = np.array([0.5, -0.2])
 
     t_lin, U_lin = backward_euler_solve_linear(
-        J, g, t0, U0_linear, t_final, k
+        J, g, t0, U0_linear, t_final, N
     )
 
     print()
