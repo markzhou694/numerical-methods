@@ -1,6 +1,7 @@
 import numpy as np
 
-def find_eigenvalues(A: np.ndarray, num_iters: int = 1000, tol: float = 1e-10):
+
+def find_eigenvalues(A: np.ndarray, num_iters: int = 1000, tol: float = 1e-10, QR_method = np.linalg.qr):
     """
     Computes the eigenvalues of a matrix A using the QR method.
 
@@ -21,7 +22,7 @@ def find_eigenvalues(A: np.ndarray, num_iters: int = 1000, tol: float = 1e-10):
 
     for _ in range(num_iters):
         # Perform QR decomposition
-        Q, R = np.linalg.qr(A)
+        Q, R = QR_method(A)
         # Update A
         A = R @ Q
 
@@ -31,3 +32,16 @@ def find_eigenvalues(A: np.ndarray, num_iters: int = 1000, tol: float = 1e-10):
             break
 
     return np.diagonal(A)
+
+if __name__ == "__main__":
+    # Example usage
+    from QR import householder_qr, modified_gram_schmidt_qr
+    from finite_diff import fd_bvp_1d
+    A = fd_bvp_1d(N=5,a = 2)[1]
+    eigenvalue = find_eigenvalues(A)
+    eigenvalue_2 = find_eigenvalues(A, QR_method= householder_qr)
+    eigenvalue_3 = find_eigenvalues(A, QR_method= modified_gram_schmidt_qr)
+    print("Eigenvalues:", eigenvalue)
+    print("Eigenvalues by householder:", eigenvalue_2)
+    print("Eigenvalues by mgs:", eigenvalue_3)
+
