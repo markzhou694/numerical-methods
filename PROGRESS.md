@@ -2,6 +2,20 @@
 
 ---
 
+## `finite_element/` — rebuilding 1D linear finite elements
+
+Standard mesh convention: `N` is the number of elements, so the nodes are
+`x_0, ..., x_N` and there are `N+1` nodal coefficients.
+
+### `finite_element/finite_element.py`
+- **Exports:** `linear_hat_basis(...)` · `linear_hat_basis_derivative(...)` · `energy_a(...)`
+- **Current scope:** Only the fixed nodal-basis definitions and the weak-form bilinear expression are retained.
+- **Deliberately deferred:** Load functional, matrix/vector assembly, boundary conditions, solve, reconstruction, and error analysis.
+- **Quadrature:** `energy_a` reuses `integration.gauss_legendre_nodes_weights`.
+- **Reference:** `finite_element/amath442a2.ipynb - Colab.pdf` remains unchanged for later comparison.
+
+---
+
 ## `finite_diff/` — unified finite-difference interfaces
 
 Standard grid convention: `N` is the number of intervals, so every coordinate grid is `x_0, ..., x_N` with `N+1` points.

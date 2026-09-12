@@ -23,11 +23,11 @@ from interpolation.interval_map import from_standard
 # for use with tensor_product_2d.
 #
 # Usage:
-#   I    = gauss_legendre(f, a, b, n_nodes)
+#   I    = gauss_quadrature(f, a, b, n_nodes)
 #   x, w = gauss_legendre_nodes_weights(a, b, n_nodes)
 
 
-def gauss_legendre(f, a: float, b: float, n_nodes: int):
+def gauss_quadrature(f, a: float, b: float, n_nodes: int):
     """
     n_nodes-point Gauss-Legendre quadrature on [a, b].
 
@@ -94,7 +94,7 @@ def main():
     # Example usage
     a, b = 0, 1
     n_nodes = 10
-    result = gauss_legendre(f, a, b, n_nodes)
+    result = gauss_quadrature(f, a, b, n_nodes)
     print(f"Quadrature estimate: {result}")
 
 if __name__ == "__main__":
