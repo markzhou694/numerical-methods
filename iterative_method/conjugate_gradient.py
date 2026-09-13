@@ -3,7 +3,7 @@ from scipy import sparse
 
 
 
-def conjugate_gradient(A: np.ndarray, b: np.ndarray, x0: np.ndarray = None, max_iter: int = 20000, tol: float = 1e-8):
+def cg(A: np.ndarray, b: np.ndarray, x0: np.ndarray = None, max_iter: int = 20000, tol: float = 1e-8):
     """
     Solve A x = b by the conjugate gradient iteration.
 
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     b = np.sin(np.random.rand(N - 1)*2*np.pi)
 
     t0 = perf_counter()
-    x, iters = conjugate_gradient(A, b, tol=1e-10)
+    x, iters = cg(A, b, tol=1e-10)
     t1 = perf_counter()
     print(f"Conjugate gradient: {iters} iterations, time = {t1 - t0:.6f} s")    
     print(f"Residual norm = {np.linalg.norm(b - A @ x):.2e}")

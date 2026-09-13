@@ -15,6 +15,12 @@ def to_standard(x: float, a: float, b: float) -> float:
     xi = (2.0 * x - (a + b)) / (b - a)
     return xi
 
+def to_standard_01(x: float, a: float, b: float) -> float:
+    # map physical points to the standard interval:
+    #     xi = (x - a) / (b - a)
+    xi = (x - a) / (b - a)
+    return xi
+
 
 def from_standard(xi: float, a: float, b: float) -> float:
     # inverse map back to the physical interval:
@@ -22,4 +28,10 @@ def from_standard(xi: float, a: float, b: float) -> float:
     x_mid  = (a + b) / 2.0
     x_half = (b - a) / 2.0
     x = x_mid + x_half * xi
+    return x
+
+def from_standard_01(xi: float, a: float, b: float) -> float:
+    # inverse map back to the physical interval:
+    #     x = a + (b - a) * xi
+    x = a + (b - a) * xi
     return x

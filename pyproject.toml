@@ -20,6 +20,7 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = [
+    "finite_element*",
     "finite_diff*",
     "integration*",
     "interpolation*",

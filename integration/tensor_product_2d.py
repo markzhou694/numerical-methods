@@ -26,7 +26,8 @@ import numpy as np
 #   I = tensor_product_2d(f, 0, 1, 0, 1, gauss_legendre_nodes_weights, 10)
 
 
-def tensor_product_2d(f: callable, a1: float, b1: float, a2: float, b2: float, quad_fn: callable, rule_parameter: int):
+
+def tensor_product_2d(f: callable, a1: float, b1: float, a2: float, b2: float, quad_fn: callable, N:int):
     """
     2D tensor-product quadrature on [a1,b1] x [a2,b2].
 
@@ -37,15 +38,14 @@ def tensor_product_2d(f: callable, a1: float, b1: float, a2: float, b2: float, q
     a2, b2    : float     y-interval endpoints
     quad_fn   : callable  quad_fn(a, b, rule_parameter) -> (nodes, weights)
                           — returns 1D nodes and weights in [a, b]
-    rule_parameter : int  parameter passed to quad_fn; its meaning is defined
-                          by that rule (N intervals or n_nodes nodes)
+    N: int  parameter passed to quad_fn; number of nodes
 
     Returns
     -------
     I_hat : float — estimate  sum_i sum_j w_i * w_j * f(x_i, y_j)
     """
-    x_nodes, w_x = quad_fn(a1, b1, rule_parameter)
-    y_nodes, w_y = quad_fn(a2, b2, rule_parameter)
+    x_nodes, w_x = quad_fn(a1, b1, N)
+    y_nodes, w_y = quad_fn(a2, b2, N)
 
     I_hat = 0.0
     for i in range(len(x_nodes)):

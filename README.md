@@ -1,4 +1,4 @@
-# NumericalMethodsLab
+# NumericalMethods
 
 A collection of numerical algorithms implemented from scratch in Python.
 The goal is mathematical transparency — variable names match the math, loops reveal the structure,
@@ -12,6 +12,7 @@ Not a library. A working lab notebook.
 
 | Module | Status | Algorithms |
 |---|---|---|
+| `finite_element/` | In progress | 1D nodal hat basis and weak-form energy `a(u,v)`; assembly intentionally left for reconstruction |
 | `finite_diff/` | Done | 1D/2D BVPs, 5-pt and 9-pt Poisson, Neumann BCs, Richardson extrapolation, Newton nonlinear solver |
 | `ode/` | Done | Forward Euler, Backward Euler (linear + Newton), RK23 adaptive, RK4 stability region |
 | `integration/` | Done | Trapezoidal, Simpson, Newton-Cotes, adaptive quadrature, Gauss-Legendre, 2D tensor product |

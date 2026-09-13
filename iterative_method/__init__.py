@@ -5,6 +5,8 @@ try:
     from .projection_2d import projection_2d_solve
     from .greedy_projection import greedy_projection_solve
     from .trimres import trimres
+    from .gmres import gmres
+    from .conjugate_gradient import cg
 except ImportError:
     from newton import newton_solve
     from jacobi import jacobi_solve
@@ -12,3 +14,5 @@ except ImportError:
     from projection_2d import projection_2d_solve
     from greedy_projection import greedy_projection_solve
     from trimres import trimres
+    from gmres import gmres
+    from conjugate_gradient import cg
